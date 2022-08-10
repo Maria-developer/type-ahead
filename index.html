@@ -40,11 +40,12 @@
       function displayMatches() {
         const matchArray = findPlacesMatchingSearchText(this.value, cities);
         const suggestionsHtml = matchArray.map(place => {
-          const regularExpression = new RegExp(this.value, 'gi'); // The regular expression is whatever text in the place suggestions matches the search text
-          const cityNameWithHighlightedSearchText = place.city.replace(regularExpression, `<span class="highlight">${this.value}</span>`) // cityNameWithHighlightedSearchText is captured by replacing the regular expression/search text portion of the city name with the highlighted search text
+          const regularExpression = new RegExp(this.value, 'gi');
+          const cityNameWithHighlightedSearchText = place.city.replace(regularExpression, `<span class="highlight">${this.value}</span>`);
+          const stateNameWithHighlightedSearchText = place.state.replace(regularExpression, `<span class="highlight">${this.value}</span>`);
           return `
             <li>
-              <span class="name">${cityNameWithHighlightedSearchText}, ${place.state}</span>
+              <span class="name">${cityNameWithHighlightedSearchText}, ${stateNameWithHighlightedSearchText}</span>
               <span class="population">${place.population}</span>
             </li>
           `
