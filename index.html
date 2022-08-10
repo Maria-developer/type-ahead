@@ -30,6 +30,13 @@
         .then(apiData => apiData.json())
         .then(citiesData => cities = citiesData)
 
+      function findPlacesMatchingSearchText(textToMatch, cities) {
+        return cities.filter(place => {
+          const regularExpression = new RegExp(textToMatch, 'gi'); // g is for global, so the entire string is searched; i is for insensitive, so lowercase and uppercase versions of a letter are treated as the same
+          return place.city.match(regularExpression) || place.state.match(regularExpression);
+        });
+      }
+
     </script>
     
   </body>
