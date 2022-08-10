@@ -32,10 +32,29 @@
 
       function findPlacesMatchingSearchText(textToMatch, cities) {
         return cities.filter(place => {
-          const regularExpression = new RegExp(textToMatch, 'gi'); // g is for global, so the entire string is searched; i is for insensitive, so lowercase and uppercase versions of a letter are treated as the same
+          const regularExpression = new RegExp(textToMatch, 'gi');
           return place.city.match(regularExpression) || place.state.match(regularExpression);
         });
       }
+
+      function displayMatches() {
+        const matchArray = findPlacesMatchingSearchText(this.value, cities);
+        const suggestionsHtml = matchArray.map(place => {
+          return `
+            <li>
+              <span class="name">${place.city}, ${place.state}</span>
+              <span class="population">${place.population}</span>
+            </li>
+          `
+        }).join(''); // Turns array into string
+        suggestions.innerHTML = suggestionsHtml;
+      }
+
+      const searchInput = document.querySelector('.search');
+      const suggestions = document.querySelector('.suggestions');
+
+      searchInput.addEventListener('change', displayMatches); // Change event only fires when you click outside the search bar after typing in text
+      searchInput.addEventListener('keyup', displayMatches); // To make it also fire as you type each letter (i.e. keyup)
 
     </script>
     
